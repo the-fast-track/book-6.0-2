@@ -1,4 +1,16 @@
 {
+    "blackfireio/blackfire-symfony-meta": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "fcf2e044bcd90c6f2f5a6c050645e77fb3bf31c7"
+        },
+        "files": [
+            ".blackfire.yaml"
+        ]
+    },
     "doctrine/annotations": {
         "version": "1.13",
         "recipe": {
