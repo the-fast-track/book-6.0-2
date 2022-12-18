@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -13,8 +15,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
-    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'comment:list']]],
-    itemOperations: ['get' => ['normalization_context' => ['groups' => 'comment:item']]],
+    operations: [
+        new Get(normalizationContext: ['groups' => 'comment:item']),
+        new GetCollection(normalizationContext: ['groups' => 'comment:list'])
+    ],
     order: ['createdAt' => 'DESC'],
     paginationEnabled: false,
 )]

@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\ConferenceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,8 +16,10 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[ORM\Entity(repositoryClass: ConferenceRepository::class)]
 #[UniqueEntity('slug')]
 #[ApiResource(
-    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'conference:list']]],
-    itemOperations: ['get' => ['normalization_context' => ['groups' => 'conference:item']]],
+    operations: [
+        new Get(normalizationContext: ['groups' => 'conference:item']),
+        new GetCollection(normalizationContext: ['groups' => 'conference:list'])
+    ],
     order: ['year' => 'DESC', 'city' => 'ASC'],
     paginationEnabled: false,
 )]
